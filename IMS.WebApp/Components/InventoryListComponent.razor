@@ -31,11 +31,6 @@
 	[Parameter]
 	public string SearchTerm { get; set; } = string.Empty;
 
-	protected override async Task OnInitializedAsync()
-	{
-		_inventories = (await ViewInventoriesByNameUseCase.ExecuteAsync()).ToList();
-	}
-
 	protected override async Task OnParametersSetAsync()
 	{
 		_inventories = (await ViewInventoriesByNameUseCase.ExecuteAsync(SearchTerm)).ToList();
