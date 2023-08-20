@@ -12,12 +12,12 @@
 
 @code {
 
-	private string inventoryNameToSearch = string.Empty;
-	[Parameter]
-	public EventCallback<string> OnSearchInventory { get; set; }
+    private string inventoryNameToSearch = string.Empty;
+    [Parameter]
+    public EventCallback<string> OnSearchInventory { get; set; }
 
-	private void OnSearch()
-	{
-		OnSearchInventory.InvokeAsync(inventoryNameToSearch);
-	}
+    private async Task OnSearch()
+    {
+        await OnSearchInventory.InvokeAsync(inventoryNameToSearch);
+    }
 }

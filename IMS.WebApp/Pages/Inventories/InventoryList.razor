@@ -5,7 +5,7 @@
 <br />
 <SearchInventoryComponent OnSearchInventory="OnInventorySearch">
 </SearchInventoryComponent>
-<ol class="list-group list-group-numbered">
+@*<ol class="list-group list-group-numbered">
 	@foreach (var inv in _inventories)
 	{
 		<li class="list-group-item d-flex justify-content-between align-items-start">
@@ -15,7 +15,27 @@
 			</div>
 		</li>
 	}
-</ol>
+</ol>*@
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th scope="col">Name</th>
+			<th scope="col">Quantity</th>
+			<th scope="col">Price</th>
+			<th scope="col"></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var inv in _inventories)
+		{
+			<tr class="table">
+				<td>@inv.Name</td>
+				<td>@inv.Quantity</td>
+				<td>@inv.Price.ToString("C")</td>
+			</tr>
+		}
+	</tbody>
+</table>
 
 @code {
 	private List<Inventory> _inventories = new List<Inventory>();
@@ -25,7 +45,7 @@
 		_inventories = (await ViewInventoriesByNameUseCase.ExecuteAsync()).ToList();
 	}
 
-	private async void OnInventorySearch(string searchTerm)
+	private async Task OnInventorySearch(string searchTerm)
 	{
 		this.searchTerm = searchTerm;
 		_inventories = (await ViewInventoriesByNameUseCase.ExecuteAsync(searchTerm)).ToList();
