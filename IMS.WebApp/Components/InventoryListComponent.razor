@@ -1,30 +1,34 @@
 ﻿@inject IViewInventoriesByNameUseCase ViewInventoriesByNameUseCase
 
-<table class="table table-bordered">
-	<thead>
-		<tr>
-			<th scope="col">Name</th>
-			<th scope="col">Quantity</th>
-			<th scope="col">Price</th>
-			<th scope="col"></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var inv in _inventories)
-		{
-			<tr class="table">
-				<td>@inv.Name</td>
-				<td>@inv.Quantity</td>
-				<td>@inv.Price.ToString("C")</td>
-				<td>
-					<button type="button"
-						class="btn btn-light">
-					Edit</button>
-				</td>
+@if (_inventories != null && _inventories.Count > 0 )
+{
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">Name</th>
+				<th scope="col">Quantity</th>
+				<th scope="col">Price</th>
+				<th scope="col"></th>
 			</tr>
-		}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			@foreach (var inv in _inventories)
+			{
+				<tr class="table">
+					<td>@inv.Name</td>
+					<td>@inv.Quantity</td>
+					<td>@inv.Price.ToString("C")</td>
+					<td>
+						<button type="button"
+								class="btn btn-light">
+							Edit
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
 
 @code {
 	private List<Inventory> _inventories = new List<Inventory>();
