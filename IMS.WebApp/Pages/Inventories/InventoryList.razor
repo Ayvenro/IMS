@@ -1,0 +1,33 @@
+﻿@page "/inventoryList"
+
+@inject IViewInventoriesByNameUseCase ViewInventoriesByNameUseCase
+<h3>Inventory List</h3>
+<br />
+<SearchInventoryComponent OnSearchInventory="OnInventorySearch">
+</SearchInventoryComponent>
+<ol class="list-group list-group-numbered">
+	@foreach (var inv in _inventories)
+	{
+		<li class="list-group-item d-flex justify-content-between align-items-start">
+			<div class="ms-2 me-auto">
+				<div class="fw-bold">@inv.Name</div>
+				@inv.Price.ToString("C")
+			</div>
+		</li>
+	}
+</ol>
+
+@code {
+	private List<Inventory> _inventories = new List<Inventory>();
+	private string searchTerm = string.Empty;
+	protected override async Task OnInitializedAsync()
+	{
+		_inventories = (await ViewInventoriesByNameUseCase.ExecuteAsync()).ToList();
+	}
+
+	private async void OnInventorySearch(string searchTerm)
+	{
+		this.searchTerm = searchTerm;
+		_inventories = (await ViewInventoriesByNameUseCase.ExecuteAsync(searchTerm)).ToList();
+	}
+}
