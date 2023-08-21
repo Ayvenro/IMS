@@ -3,7 +3,7 @@ using IMS.UseCases.Inventories.Interfaces;
 
 namespace IMS.Plugins.InMemory
 {
-    public class InventoryRepository : IInventoryRepository
+	public class InventoryRepository : IInventoryRepository
     {
         private List<Inventory> _inventories;
 
@@ -43,5 +43,21 @@ namespace IMS.Plugins.InMemory
             }
             return _inventories.Where(x => x.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
         }
-    }
+
+		public Task EditInventoryAsync(Inventory inventory)
+		{
+			if (_inventories.Any(x => x.Name.Equals(inventory.Name, StringComparison.OrdinalIgnoreCase)))
+			{
+				return Task.CompletedTask;
+			}
+			var inv = _inventories.FirstOrDefault(x => x.Id == inventory.Id);
+			if (inv != null)
+			{
+				inv.Name = inventory.Name;
+				inv.Quantity = inventory.Quantity;
+				inv.Price = inventory.Price;
+			}
+			return Task.CompletedTask;
+		}
+	}
 }
