@@ -1,0 +1,14 @@
+﻿@page "/editinventory/{InventoryId:int}"
+
+@inject IEditInventoryUseCase EditInventoryUseCase
+@inject NavigationManager NavigationManager
+
+<h3>Edit Inventory</h3>
+<br />
+
+
+
+@code {
+	[Parameter]
+	public int InventoryId { get; set; }
+}
